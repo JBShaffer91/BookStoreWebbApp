@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BookStoreWebApp.Services;
+using BookStoreWebApp.Models;
+using Microsoft.EntityFrameworkCore;
+using MySql.Data.EntityFrameworkCore.Extensions;
+using BookStoreWebApp.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,12 +20,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<BookService>();
 builder.Services.AddControllersWithViews();
 
+// Configure MySQL database connection
+builder.Services.AddDbContext<BookStoreDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("BookStoreDB").Replace("{MYSQL_PASSWORD}", Environment.GetEnvironmentVariable("MYSQL_PASSWORD"))));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
