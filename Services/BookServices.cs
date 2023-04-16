@@ -16,5 +16,10 @@ namespace BookStoreWebApp.Services
         {
             return _books;
         }
+
+        public List<Book> GetAllBooks()
+        {
+            return GetBooks();
+        }
     }
 }
