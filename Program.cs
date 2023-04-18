@@ -35,9 +35,16 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+// Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
+
+// TestConnection route
+app.MapControllerRoute(
+    name: "testConnection",
+    pattern: "test-connection",
+    defaults: new { controller = "Book", action = "TestConnection" });
 
 app.MapFallbackToFile("index.html");
 
